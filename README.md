@@ -44,8 +44,7 @@ The Library System is a microservices-based application designed to manage books
   "ISBN": "9781408855652",
   "genre": "Fantasy",
   "publisher": "Bloomsbury Publishing",
-  "publishedDate": "2014-01-01",
-  "id": "6679c66575e6aa5d0b6a46e9"
+  "publishedDate": "2014-01-01"
 }
 ```
 
