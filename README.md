@@ -64,7 +64,8 @@ The Library System is a microservices-based application designed to manage books
     "memberName":"RL",
     "ISBN":"9781408855652",
     "loanDate":"2024-06-30"
-}```
+}
+```
 
 ### Public Access
 - **Base URL**: `http://localhost:80`
