@@ -59,8 +59,6 @@ The Library System is a microservices-based application designed to manage books
 #### Example Loan
 ```json
 {
-  examplewle
-  {
     "memberName":"RL",
     "ISBN":"9781408855652",
     "loanDate":"2024-06-30"
