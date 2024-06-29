@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  books-service:
+    build: ./books
+    container_name: books-service
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/books_db
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+    restart: always
+    volumes:
+      - books-data:/data/books
+
+  loans-service-1:
+    build: ./loans
+    container_name: loans-service-1
+    ports:
+      - "5002:5002"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/loans_db
+      - BOOKS_SERVICE_URL=http://books-service:5001
+    depends_on:
+      - mongo
+      - books-service
+    networks:
+      - app-network
+    restart: always
+    volumes:
+      - loans-data:/data/loans
+
+  loans-service-2:
+    build: ./loans
+    container_name: loans-service-2
+    ports:
+      - "5003:5003"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/loans_db
+      - BOOKS_SERVICE_URL=http://books-service:5001
+    depends_on:
+      - mongo
+      - books-service
+    networks:
+      - app-network
+    restart: always
+    volumes:
+      - loans-data:/data/loans
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - books-service
+      - loans-service-1
+      - loans-service-2
+    networks:
+      - app-network
+    restart: always
+
+volumes:
+  books-data:
+  loans-data:
+  mongo-data:
+
+networks:
+  app-network:
